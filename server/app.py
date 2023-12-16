@@ -2,6 +2,7 @@ from flask import request, Response, Flask, jsonify
 from flask_cors import CORS
 from ultralytics import YOLO
 from PIL import Image
+import json
 
 app = Flask(__name__, static_folder='static')
 CORS(app)
@@ -27,13 +28,14 @@ def detect_object():
             'message': str(e)
         })
 def detect_object_on_image(image_file):
-    model = YOLO('yolov8n.pt')
+    # model = YOLO('./models/yolov8n.pt')
+    model = YOLO('./models/i1-yolov8s.pt')
     results = model.predict(image_file)
     result = results[0]
     output = []
     for box in result.boxes:
         x1,y1,x2,y2 = [
-            rounx(x) for x in box.xyxy[0].tolist()
+            round(x) for x in box.xyxy[0].tolist()
         ]
         class_id = box.cls[0].item()
         prob = round(box.conf[0].item(),2)
