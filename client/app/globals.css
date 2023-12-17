@@ -1,3 +1,20 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  html {
+    @apply scroll-smooth w-full h-full scrollbar-thin scrollbar-thumb-gray-900 scrollbar-track-gray-700;
+  }
+}
+.custom-header-bg {
+  background: linear-gradient(
+      rgba(237, 105, 65, 0.914),
+      rgba(247, 52, 52, 0.984)
+    ),
+    url("../public/assets/images/cars-1.jpg");
+
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}

@@ -51,16 +51,41 @@ const InputForm = () => {
   useEffect(() => {}, [video]);
   return (
     <>
-      <main className="grid grid-cols-2">
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <div>
-            <label>Image</label>
-            <input type="file" {...register("image")} />
+      <main className="max-w-[600px] min-h-[300px] mx-auto bg-slate-100">
+        {video ? (
+          <div className="w-full min-h-[300px] border-4 rounded-md border-dashed p-1">
+            {video && (
+              <img
+                src={video}
+                alt=""
+                className="w-full h-full object-cover rounded-md"
+              />
+            )}
           </div>
-          <button>Submit</button>
-        </form>
-
-        <div>{video && <img src={video} alt="" />}</div>
+        ) : (
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <div>
+              <label
+                htmlFor="image"
+                className="min-h-[300px] py-10 border-4 rounded-lg border-dashed bg-slate-100 flex items-center justify-center cursor-pointer"
+              >
+                Click to upload
+              </label>
+              <input
+                type="file"
+                {...register("image")}
+                id="image"
+                className="hidden"
+              />
+            </div>
+            <button
+              type="submit"
+              className="font-bold py-4 px-8 bg-gray-900 rounded-md text-white w-full"
+            >
+              Yes, submit this video
+            </button>
+          </form>
+        )}
       </main>
     </>
   );
