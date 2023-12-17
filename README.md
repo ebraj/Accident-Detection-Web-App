@@ -94,3 +94,7 @@ The frontend setup is quite easy, unlike backend setup as it does not require an
     - [YOLOv8 Course - Real Time Object Detection Web Application using YOLOv8 and Flask - Webcam/IP Camera](https://youtu.be/xzN_aG917-8?si=svQKzEL14o-afgFX)
 - Codes :
   - https://github.com/MuhammadMoinFaisal/Computervisionprojects/tree/main/YOLOv8-CrashCourse
+
+## UIS
+
+![Homepage](./uis/homepage.png)
