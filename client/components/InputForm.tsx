@@ -10,7 +10,7 @@ type FormProps = {
 };
 
 const InputForm = () => {
-  const [video, setVideo] = useState<any>();
+  const [video, setVideo] = useState<any>(null);
   const {
     register,
     handleSubmit,
@@ -47,13 +47,12 @@ const InputForm = () => {
     }
   };
 
-  console.log("rendered");
   useEffect(() => {}, [video]);
   return (
     <>
-      <main className="max-w-[600px] min-h-[300px] mx-auto bg-slate-100">
+      <main className="max-w-[900px] min-h-[400px] mx-auto">
         {video ? (
-          <div className="w-full min-h-[300px] border-4 rounded-md border-dashed p-1">
+          <div className="w-full min-h-[200px] md:min-h-[400px] border-4 rounded-md border-dashed p-1">
             {video && (
               <img
                 src={video}
@@ -67,9 +66,9 @@ const InputForm = () => {
             <div>
               <label
                 htmlFor="image"
-                className="min-h-[300px] py-10 border-4 rounded-lg border-dashed bg-slate-100 flex items-center justify-center cursor-pointer"
+                className="uppercase min-h-[200px] md:min-h-[400px] py-10 border-4 rounded-lg border-dashed bg-slate-100 flex items-center justify-center cursor-pointer"
               >
-                Click to upload
+                {video ? "Uploaded Successfully" : "Click to upload"}
               </label>
               <input
                 type="file"
@@ -82,7 +81,7 @@ const InputForm = () => {
               type="submit"
               className="font-bold py-4 px-8 bg-gray-900 rounded-md text-white w-full"
             >
-              Yes, submit this video
+              Submit this Video
             </button>
           </form>
         )}
