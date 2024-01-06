@@ -18,7 +18,6 @@ const InputForm = () => {
   } = useForm<FormProps>();
 
   const onSubmit: SubmitHandler<FormProps> = async (data) => {
-    console.log(data.image[0]);
     try {
       const formData = new FormData();
       formData.append("image", data.image[0]);
@@ -31,7 +30,6 @@ const InputForm = () => {
         body: formData,
       });
       const results = await response.json();
-      console.log(results);
       if (results.status === "success") {
         const new_api = await fetch(
           `http://127.0.0.1:8080/api/show-video/static/videos/${results.path}`,
@@ -39,12 +37,9 @@ const InputForm = () => {
             method: "GET",
           }
         );
-        console.log(new_api);
         setVideo(new_api.url);
       }
-    } catch (err) {
-      console.error(err);
-    }
+    } catch (err) {}
   };
 
   useEffect(() => {}, [video]);

@@ -7,6 +7,7 @@ import cvzone
 import cv2
 import json
 import os
+import nest_asyncio
 from modules.detect_object_on_video import detect_object_on_video
 
 app = Flask(__name__, static_folder='static')
@@ -89,7 +90,6 @@ def show_video(path):
 @app.route('/api/webcam', methods=['GET'])
 def api_webcam():
     return Response(generate_frames(path_x=0), mimetype='multipart/x-mixed-replace; boundary=frame')
-
 
 if __name__ == '__main__':
     app.run(debug=True, port=8080)

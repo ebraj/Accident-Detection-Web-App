@@ -2,9 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
+  .scrollbar-medium::-webkit-scrollbar {
+    width: 2px;
+  }
+}
+
 @layer base {
   html {
-    @apply scroll-smooth w-full h-full scrollbar-thin scrollbar-thumb-gray-900 scrollbar-track-gray-700;
+    @apply scroll-smooth w-full h-[100%] scrollbar-thin scrollbar-thumb-gray-900 scrollbar-track-gray-700;
   }
 }
 .custom-header-bg {
