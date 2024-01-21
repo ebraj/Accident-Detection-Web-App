@@ -4,13 +4,19 @@ import React from "react";
 const DataTable = dynamic(() => import("@/components/dashboard/DataTable"), {
   ssr: false,
 });
+const OgDataTable = dynamic(
+  () => import("@/components/dashboard/OgDataTable"),
+  {
+    ssr: false,
+  }
+);
 
 type Props = {};
 
 export default function AllDatas({}: Props) {
   return (
     <div>
-      <DataTable />
+      <OgDataTable />
     </div>
   );
 }

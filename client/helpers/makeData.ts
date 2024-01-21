@@ -1,5 +1,15 @@
 import { faker } from "@faker-js/faker";
 
+export type OgAccident = {
+  id: string;
+  address: string;
+  city: string;
+  latitude: number;
+  longitude: number;
+  severtyInPercentage: number;
+  severty: "low" | "mid" | "high" | "extreme";
+};
+
 export type Accident = {
   city: string;
   latitude: number;
