@@ -10,7 +10,7 @@
 
 @layer base {
   html {
-    @apply scroll-smooth w-full h-[100%] scrollbar-thin scrollbar-thumb-gray-900 scrollbar-track-gray-700;
+    @apply text-sm scroll-smooth w-full h-[100%] scrollbar-thin scrollbar-thumb-gray-900 scrollbar-track-gray-700;
   }
 }
 .custom-header-bg {

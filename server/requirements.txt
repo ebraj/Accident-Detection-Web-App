@@ -10,6 +10,8 @@ Flask==3.0.0
 Flask-Cors==4.0.0
 fonttools==4.46.0
 fsspec==2023.12.2
+geographiclib==2.0
+geopy==2.4.1
 idna==3.6
 itsdangerous==2.1.2
 Jinja2==3.1.2

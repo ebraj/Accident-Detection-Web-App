@@ -1,5 +1,5 @@
 from flask import request, Response, Flask, jsonify, session, send_from_directory
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 from ultralytics import YOLO
 from PIL import Image
 from werkzeug.utils import secure_filename
@@ -8,12 +8,55 @@ import cv2
 import json
 import os
 import nest_asyncio
+from geopy.geocoders import Nominatim
 from modules.detect_object_on_video import detect_object_on_video
+from flask_sqlalchemy import SQLAlchemy
+import uuid
 
+# AUTH AND MONGODB
+from bson import ObjectId
+from pymongo import MongoClient
+from flask_jwt_extended import JWTManager, create_access_token, get_jwt_identity, jwt_required
+import datetime
+
+client = MongoClient("localhost", 27017)
+mongo_db = client.flask_database
+
+# CLOUDINARY
+import cloudinary
+import cloudinary.api
+import os
+from dotenv import load_dotenv
+load_dotenv()
+
+db=SQLAlchemy()
 app = Flask(__name__, static_folder='static')
 app.config['SECRET_KEY'] = 'ebrajdon'
 app.config['UPLOAD_FOLDER'] = 'static/videos'
-CORS(app)
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///project.db"
+
+# JWT... 
+jwt = JWTManager(app)
+app.config['JWT_SECRET_KEY']='ebrajdon'
+app.config['JWT_ACCESS_TOKEN_EXPIRES']=datetime.timedelta(days=1)
+
+db.init_app(app)
+todos = mongo_db.todos
+users_collection = mongo_db.users
+CORS(app, origins=["http://localhost:3000"], supports_credentials=True)
+# CORS(app, resources={r"/api/*": {"origins": "http://localhost:3000"}}, supports_credentials=True)
+
+# Creating the model
+class Accident(db.Model):
+    id = db.Column(db.String(36), primary_key=True, default=str(uuid.uuid4()))
+    address = db.Column(db.String(100), nullable=False)
+    city = db.Column(db.String(100), nullable=False)
+    latitude = db.Column(db.String(100), nullable=False)
+    longitude = db.Column(db.String(100), nullable=False)
+    severtyInPercentage = db.Column(db.Integer, nullable=False)
+    severty = db.Column(db.String(100), nullable=False)
+    def __repr__(self):
+        return f"User('{self.username}', '{self.email}')"
 
 # GENERATE FRAMES
 def generate_frames(path_x = ''):
@@ -90,6 +133,106 @@ def show_video(path):
 @app.route('/api/webcam', methods=['GET'])
 def api_webcam():
     return Response(generate_frames(path_x=0), mimetype='multipart/x-mixed-replace; boundary=frame')
+
+@app.route("/api/accident-datas", methods=['GET'])
+def api_accident_datas():
+    allDatas = Accident.query.all()
+    return jsonify({
+        "status": "success",
+        "datas": [
+            {
+                "id": data.id,
+                "address": data.address,
+                "city": data.city,
+                "latitude": data.latitude,
+                "longitude": data.longitude,
+                "severtyInPercentage": data.severtyInPercentage,
+                "severty": data.severty
+            } for data in allDatas
+        ]
+    })
+
+@app.route("/api/accident-d/<accidentId>", methods=["GET"])
+def get_single_accident(accidentId):
+    accident = Accident.query.filter_by(id=accidentId).first()
+    return jsonify({
+        "status": "success",
+        "data": {
+            "id": accident.id,
+            "address": accident.address,
+            "city": accident.city,
+            "latitude": accident.latitude,
+            "longitude": accident.longitude,
+            "severtyInPercentage": accident.severtyInPercentage,
+            "severty": accident.severty
+        }
+    })
+
+@app.route('/api/accident', methods=['POST'])
+def api_accident():
+    if request.method == 'POST':
+        data = request.get_json()
+        accident = Accident(
+            address=data["address"],
+            city=data['city'],
+            latitude=data['latitude'],
+            longitude=data['longitude'],
+            severtyInPercentage=data['severtyInPercentage'],
+            severty=data['severty']
+        )
+        db.session.add(accident)
+        db.session.commit()
+        return jsonify({
+            "status": "success",
+            "message": "Accident data saved successfully."
+        })
+    
+@app.route('/api/get-geo',methods=['GET'])
+def api_getgeo():
+    location = Nominatim(user_agent="server")
+    getLoc = location.reverse("28.237987,83.995588")
+    print(getLoc)
+    return jsonify({
+        "status": "success",
+        "location": {
+            "address": getLoc.address,
+            "latitude": getLoc.latitude,
+            "longitude": getLoc.longitude,
+            "city": getLoc.raw.get("address", {}).get("city"),
+        }
+    })
+
+# ROUTE FOR LOGIN
+@app.route('/api/v1/register', methods=['POST', 'OPTIONS'])
+def register():
+    new_user = request.get_json() #store the json body request
+    new_user['password'] = hashlib.sha256(new_user["password"].encode('utf-8')).hexdigest() #encrypt password
+    doc = users_collection.find_one({"username": new_user["username"]}) #check if the user exits
+    if not doc:
+        users_collection.insert_one(new_user)
+        return jsonify({'msg': 'User created successfully'}), 201
+    else:
+        return jsonify({'msg': 'User already exists'}), 409
+    
+@app.route('/api/v1/login', methods=['POST', 'OPTIONS'])
+@cross_origin(supports_credentials=True)
+def login():
+    login_details = request.get_json()
+    # return jsonify({"msg":"Data"}), 200
+    user_from_db = users_collection.find_one({'username': login_details['username']})
+    if user_from_db:
+        print("🔥")
+        encrypted_password = hashlib.sha256(login_details['password'].encode('utf-8')).hexdigest()
+        if encrypted_password == user_from_db['password']:
+            access_token = create_access_token(identity=user_from_db['username'])
+            return jsonify(access_token=access_token), 200
+    else:
+        return jsonify({'msg': "User doesnot exits"}), 401
+    return jsonify({'msg': 'The username or password is incorrect'}), 401
+
+
+with app.app_context():
+    db.create_all()
 
 if __name__ == '__main__':
     app.run(debug=True, port=8080)

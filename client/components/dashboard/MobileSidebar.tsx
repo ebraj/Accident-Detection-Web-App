@@ -29,12 +29,12 @@ const routes = [
         href: "/",
         hrefAddress: "/dashboard",
       },
-      {
-        label: "Recent Updates",
-        icon: TagIcon,
-        href: "recent-updates",
-        hrefAddress: "/dashboard/recent-updates",
-      },
+      // {
+      //   label: "Recent Updates",
+      //   icon: TagIcon,
+      //   href: "recent-updates",
+      //   hrefAddress: "/dashboard/recent-updates",
+      // },
       {
         label: "All Datas",
         icon: Inbox,
@@ -52,7 +52,7 @@ export default function MobileSidebar({}: Props) {
 
   return (
     <div className={cn("hidden md:block", showSidebar ? "block" : "hidden")}>
-      <div className="fixed scrollbar scrollbar-medium scrollbar-thumb-gray-400 scrollbar-track-gray-200 top-0 left-0 bottom-0 overflow-y-auto px-5 md:px-5 py-6 min-h-screen min-w-[280px] bg-white shadow-sm border-r-2">
+      <div className="text-gray-100 fixed scrollbar scrollbar-medium scrollbar-thumb-gray-400 scrollbar-track-gray-200 top-0 left-0 bottom-0 overflow-y-auto px-5 md:px-5 py-6 min-h-screen min-w-[280px] bg-gray-900 shadow-sm border-r-2">
         <div className="flex space-x-5 items-center justify-between pb-10">
           <Link href="/">
             <h2 className="text-xl font-black">VCD</h2>
@@ -79,9 +79,9 @@ export default function MobileSidebar({}: Props) {
                       <Link
                         href={`/dashboard/${link.href}`}
                         className={cn(
-                          "offset_ring hover:bg-accent group my-0.5 flex w-full cursor-pointer justify-start rounded-lg px-3 py-2 font-medium",
+                          "offset_ring group my-0.5 flex w-full cursor-pointer justify-start rounded-lg px-3 py-2 font-medium",
                           {
-                            "bg-slate-100": pathname === `${link.hrefAddress}`,
+                            "bg-gray-800": pathname === `${link.hrefAddress}`,
                           }
                         )}
                       >

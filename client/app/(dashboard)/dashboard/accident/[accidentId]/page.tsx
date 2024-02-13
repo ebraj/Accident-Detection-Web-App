@@ -32,15 +32,28 @@ export default function SingleAccidentPage({ params }: any) {
         <>Loading...</>
       ) : (
         <>
-          <GridContainer className="lg:grid-cols-2">
-            {/* Map Section */}
-            <div>
-              <CustomMap />
+          {/* Other details section */}
+          <GridContainer className="items-stretch">
+            <div className="bg-white shadow-sm p-5 break-all">
+              {singleAccident?.data?.address}
             </div>
-
-            {/* Other details section */}
-            <div></div>
+            <div className="bg-white shadow-sm p-5 break-all">
+              {singleAccident?.data?.longitude}
+            </div>
+            <div className="bg-white shadow-sm p-5 break-all">
+              {singleAccident?.data?.latitude}
+            </div>
+            <div className="bg-white shadow-sm p-5 break-all">
+              {singleAccident?.data?.severty}
+            </div>
+            <div className="bg-white shadow-sm p-5 break-all">
+              {singleAccident?.data?.severtyInPercentage}
+            </div>
           </GridContainer>
+          {/* Map Section */}
+          <div className="pt-8">
+            <CustomMap />
+          </div>
         </>
       )}
     </div>

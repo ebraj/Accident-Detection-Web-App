@@ -2,6 +2,7 @@ import React from "react";
 import { LogIn } from "lucide-react";
 import Link from "next/link";
 import MaxWidthContainer from "../layouts/MaxWidthContainer";
+import Button from "../reusables/cva-button";
 
 type Props = {};
 
@@ -16,17 +17,15 @@ export default function Navbar({}: Props) {
 
           <ul className="flex items-center justify-center space-x-2">
             <li>
-              <Link href={"/auth/login"}>
-                <button className="w-full py-2 rounded-md border px-8 transition-all hover:scale-105">
-                  Register
-                </button>
+              <Link href={"/auth/register"}>
+                <Button variant={"defaultOutline"}>Register</Button>
               </Link>
             </li>
             <li>
               <Link href={"/auth/login"}>
-                <button className="w-full py-2 rounded-md border-2 border-red-500 bg-gradient-to-r from-red-500 to-orange-700 px-8 transition-all hover:scale-105">
+                <Button variant={"secondary"} className="">
                   Login
-                </button>
+                </Button>
               </Link>
             </li>
           </ul>
