@@ -17,11 +17,14 @@ export default function LoginForm({}: Props) {
 
   const handleLoginSubmit: SubmitHandler<InputTypes> = async (data) => {
     try {
-      const response = await axios.post("http://127.0.0.1:8080/api/v1/login", {
-        username: data.email,
-        password: data.password,
-        withCredentials: true,
-      });
+      const response = await axios.post(
+        "http://127.0.0.1:8080/api/v1/register",
+        {
+          username: data.email,
+          password: data.password,
+          withCredentials: true,
+        }
+      );
       console.log(response);
     } catch (error) {
       console.log(error);
