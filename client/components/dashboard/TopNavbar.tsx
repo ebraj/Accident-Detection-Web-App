@@ -1,11 +1,8 @@
 "use client";
-import React from "react";
-import { Bell, LogIn } from "lucide-react";
-import Link from "next/link";
-import MaxWidthContainer from "../layouts/MaxWidthContainer";
-import { BellRing } from "lucide-react";
-import { Menu } from "lucide-react";
 import useSidebar from "@/contexts/useSidebar";
+import { BellRing, Menu } from "lucide-react";
+import UserNav from "../auth/UserNav";
+import MaxWidthContainer from "../layouts/MaxWidthContainer";
 
 type Props = {};
 
@@ -30,11 +27,7 @@ export default function TopNavbar({}: Props) {
             <li>
               <BellRing />
             </li>
-            <li className="ring rounded-full p-0.5 ring-orange-400">
-              <button className="w-[35px] h-[35px] flex items-center justify-center rounded-full bg-gradient-to-r from-red-500 to-orange-700 transition-all hover:scale-105">
-                A
-              </button>
-            </li>
+            <UserNav />
           </ul>
         </nav>
       </MaxWidthContainer>

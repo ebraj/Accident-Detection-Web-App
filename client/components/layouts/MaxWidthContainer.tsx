@@ -8,10 +8,10 @@ type Props = {
 
 export default function MaxWidthContainer({ children, className }: Props) {
   return (
-    <div
+    <section
       className={cn("mx-auto w-[100%] max-w-[1350px] px-5 md:px-10", className)}
     >
       {children}
-    </div>
+    </section>
   );
 }

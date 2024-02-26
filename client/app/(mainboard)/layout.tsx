@@ -1,5 +1,9 @@
 import Navbar from "@/components/common/Navbar";
 import Footer from "@/components/layouts/Footer";
+import dynamic from "next/dynamic";
+// const Navbar = dynamic(() => import("@/components/common/Navbar"), {
+//   ssr: false,
+// });
 
 export const metadata = {
   title: "Accident Detection System",

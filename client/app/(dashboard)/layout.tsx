@@ -1,9 +1,7 @@
-import TopNavbar from "@/components/dashboard/TopNavbar";
-import Link from "next/link";
+import MainSection from "@/components/dashboard/MainSection";
 import MobileSidebar from "@/components/dashboard/MobileSidebar";
 import MaxWidthContainer from "@/components/layouts/MaxWidthContainer";
 import { SidebarContextProvider } from "@/contexts/useSidebar";
-import MainSection from "@/components/dashboard/MainSection";
 
 export const metadata = {
   title: "Accident Detection System",

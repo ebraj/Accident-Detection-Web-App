@@ -3,6 +3,8 @@ import MaxWidthContainer from "../layouts/MaxWidthContainer";
 import GridContainer from "../layouts/GridContainer";
 import Image from "next/image";
 import Tenor from "@/public/assets/images/tenor.gif";
+import { Button } from "../ui/button";
+import Link from "next/link";
 
 type Props = {};
 
@@ -21,12 +23,12 @@ export default function Hero({}: Props) {
               the CCTV installed and notify the concerned authorities for the
               instant rescue.
             </p>
-            <a
-              href="#model-test"
+            <Link
+              href={"#model-test"}
               className="inline-block text-lg bg-black text-white px-8 py-3 rounded-md font-bold"
             >
               Test your video
-            </a>
+            </Link>
           </div>
           <div>
             <Image
