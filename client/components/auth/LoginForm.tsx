@@ -36,7 +36,7 @@ export default function LoginForm({}: Props) {
       id: "login",
     });
     try {
-      const response = await axios.post("http://127.0.0.1:8080/api/v1/login", {
+      const response = await axios.post("http://127.0.0.1:8080/auth/login", {
         username: data.email,
         password: data.password,
         withCredentials: true,

@@ -28,7 +28,7 @@ export default function OgDataTable({}: Props) {
     },
   });
 
-  console.log(accidents);
+  console.log(error);
   const columns = React.useMemo<ColumnDef<OgAccident, any>[]>(
     () => [
       {

@@ -12,6 +12,7 @@ import nest_asyncio
 from geopy.geocoders import Nominatim
 from modules.detect_object_on_video import detect_object_on_video
 from flask_sqlalchemy import SQLAlchemy
+from blueprints.auth.auth import auth_bp
 import uuid
 
 # AUTH AND MONGODB
@@ -40,9 +41,9 @@ app.config['UPLOAD_FOLDER'] = 'static/videos'
 jwt = JWTManager(app)
 app.config['JWT_SECRET_KEY']='ebrajdon'
 app.config['JWT_ACCESS_TOKEN_EXPIRES']=datetime.timedelta(days=1)
+app.register_blueprint(auth_bp)
 
 # db.init_app(app)
-todos = mongo_db.todos
 accidents_collection = mongo_db.accidents
 users_collection = mongo_db.users
 CORS(app, origins=["http://localhost:3000"], supports_credentials=True)
@@ -88,6 +89,7 @@ def detect_object():
             "status": 'error',
             'message': str(e)
         })
+    
 def detect_object_on_image(image_file):
     # model = YOLO('./models/yolov8n.pt')
     model = YOLO('./models/current.pt')
@@ -217,35 +219,6 @@ def get_single_accident(accidentId):
 #             "city": getLoc.raw.get("address", {}).get("city"),
 #         }
 #     })
-
-# ROUTE FOR REGISTER
-@app.route('/api/v1/register', methods=['POST', 'OPTIONS'])
-@cross_origin(supports_credentials=True)
-def register():
-    new_user = request.get_json() #store the json body request
-    new_user['password'] = hashlib.sha256(new_user["password"].encode('utf-8')).hexdigest() #encrypt password
-    doc = users_collection.find_one({"username": new_user["username"]}) #check if the user exits
-    if not doc:
-        users_collection.insert_one(new_user)
-        return jsonify({'msg': 'User created successfully'}), 201
-    else:
-        return jsonify({'msg': 'User already exists'}), 409
-    
-# ROUTE FOR THE LOGIN
-@app.route('/api/v1/login', methods=['POST', 'OPTIONS'])
-@cross_origin(supports_credentials=True)
-def login():
-    login_details = request.get_json()
-    user_from_db = users_collection.find_one({'username': login_details['username']})
-    if user_from_db:
-        print("🔥")
-        encrypted_password = hashlib.sha256(login_details['password'].encode('utf-8')).hexdigest()
-        if encrypted_password == user_from_db['password']:
-            access_token = create_access_token(identity=user_from_db['username'])
-            return jsonify(access_token=access_token), 200
-    else:
-        return jsonify({'msg': "User doesnot exits"}), 404
-    return jsonify({'msg': 'The username or password is incorrect'}), 401
 
 if __name__ == '__main__':
     app.run(debug=True, port=8080)
