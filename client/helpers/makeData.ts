@@ -6,8 +6,9 @@ export type OgAccident = {
   city: string;
   latitude: number;
   longitude: number;
-  severtyInPercentage: number;
-  severty: "low" | "mid" | "high" | "extreme";
+  severityInPercentage: number;
+  severity: "low" | "mid" | "high" | "extreme";
+  date: string;
 };
 
 export type Accident = {

@@ -34,9 +34,16 @@ export default function OgDataTable({}: Props) {
       {
         accessorFn: (row) => row.id,
         id: "id",
-        cell: (info) => info.getValue(),
+        cell: (info) => info.getValue().slice(0, 5) + "...",
         header: () => <span>ID</span>,
         footer: () => <span>ID</span>,
+      },
+      {
+        accessorFn: (row) => row.date,
+        id: "date",
+        cell: (info) => info.getValue(),
+        header: () => <span>Date & Time</span>,
+        footer: () => <span>Date & Time</span>,
       },
       {
         accessorFn: (row) => row.address,
@@ -45,37 +52,38 @@ export default function OgDataTable({}: Props) {
         header: () => <span>Address</span>,
         footer: () => <span>Address</span>,
       },
+
+      // {
+      //   accessorFn: (row) => row.city,
+      //   id: "city",
+      //   cell: (info) => info.getValue(),
+      //   header: () => <span>City</span>,
+      //   footer: () => <span>City</span>,
+      // },
+      // {
+      //   accessorFn: (row) => row.latitude,
+      //   id: "latitude",
+      //   cell: (info) => info.getValue(),
+      //   header: () => <span>Latitude</span>,
+      //   footer: () => <span>Latitude</span>,
+      // },
+      // {
+      //   accessorFn: (row) => row.longitude,
+      //   id: "longitude",
+      //   cell: (info) => info.getValue(),
+      //   header: () => <span>Longitude</span>,
+      //   footer: () => <span>Longitude</span>,
+      // },
       {
-        accessorFn: (row) => row.city,
-        id: "city",
-        cell: (info) => info.getValue(),
-        header: () => <span>City</span>,
-        footer: () => <span>City</span>,
-      },
-      {
-        accessorFn: (row) => row.latitude,
-        id: "latitude",
-        cell: (info) => info.getValue(),
-        header: () => <span>Latitude</span>,
-        footer: () => <span>Latitude</span>,
-      },
-      {
-        accessorFn: (row) => row.longitude,
-        id: "longitude",
-        cell: (info) => info.getValue(),
-        header: () => <span>Longitude</span>,
-        footer: () => <span>Longitude</span>,
-      },
-      {
-        accessorFn: (row) => row.severtyInPercentage,
-        id: "severtyInPercentage",
+        accessorFn: (row) => row.severityInPercentage,
+        id: "severityInPercentage",
         cell: (info) => info.getValue(),
         header: () => <span>Severety(%)</span>,
         footer: () => <span>Severety(%)</span>,
       },
       {
-        accessorFn: (row) => row.severty,
-        id: "severty",
+        accessorFn: (row) => row.severity,
+        id: "severity",
         cell: (info) => info.getValue(),
         header: () => <span>Severty</span>,
         footer: () => <span>Severty</span>,
@@ -85,7 +93,7 @@ export default function OgDataTable({}: Props) {
         cell: (info) => (
           <Link
             href={`accident/${info.row.original.id}`}
-            className="flex items-center space-x-1 text-orange-600 font-bold underline"
+            className="flex items-center justify-center space-x-1 text-orange-600 font-bold underline"
           >
             <span>View</span>
             <span>
@@ -111,11 +119,11 @@ export default function OgDataTable({}: Props) {
     return <div>Loading...</div>;
   }
   return (
-    <div className="">
+    <div className="overflow-hidden">
       <h2 className="text-xl sm:text-2xl pb-5">Accident Datas</h2>
 
-      <div className="w-full overflow-x-auto scrollbar-thin scrollbar-thumb-gray-900 scrollbar-track-gray-500">
-        <table className="w-full table-auto bg-white border-collapse overflow-hidden">
+      <div className="overflow-x-auto scrollbar-thin scrollbar-thumb-gray-900 scrollbar-track-gray-500">
+        <table className="lg:table-fixed bg-white border-collapse overflow-hidden w-full">
           <thead>
             {table.getHeaderGroups().map((headerGroup) => {
               return (

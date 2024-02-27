@@ -2,6 +2,7 @@ from flask import Blueprint, jsonify, request
 from datetime import datetime
 from bson import ObjectId
 from pymongo import MongoClient
+import base64
 
 # Blueprint and the mongo db collection setup...
 accident_bp = Blueprint('accident', __name__, url_prefix='/api/v1/accident')
@@ -10,11 +11,38 @@ mongo_db = client.flask_database
 accidents_collection = mongo_db.accidents
 users_collection = mongo_db.users
 
+# CLOUDINARY
+import cloudinary
+import cloudinary.api
+import cloudinary.uploader
+import os
+from dotenv import load_dotenv
+load_dotenv()
+
 # Create route
 @accident_bp.route('/create', methods=['POST'])
 def create_accident():
     if request.method == 'POST':
         accident_data = request.get_json()
+
+        frame_base64 = accident_data.get('frame', '')
+        frame_bytes = base64.b64decode(frame_base64)
+        # with open('accident_frame.jpg', 'wb') as f:
+        #     f.write(frame_bytes)
+
+        try:
+            cloudinary.config(cloud_name = os.getenv('CLOUD_NAME'), api_key=os.getenv('API_KEY'), api_secret=os.getenv('API_SECRET'))
+
+            cloudinary_response = cloudinary.uploader.upload(frame_bytes, folder="accident_frames")
+            image_url = cloudinary_response['url']
+        except Exception as e:
+            print(f'Error uploading image to Cloudinary: {str(e)}')
+            return jsonify({
+                "status": 'error',
+                "message": f"Failed to upload image to Cloudinary: {str(e)}"
+            }), 500
+            
+        # frame_bytes = base64.b64decode(frame_base64)
         accidents_collection.insert_one({
             "address" : accident_data['address'],
             "city" : accident_data['city'],
@@ -22,11 +50,13 @@ def create_accident():
             "longitude" : accident_data['longitude'],
             "severityInPercentage" : accident_data['severityInPercentage'],
             "severity" : accident_data['severity'],
-            "date": datetime.now()       
+            "date": datetime.now(),
+            "image_url": image_url
         })
         return jsonify({
             "status": "success",
-            "message": "Accident data saved successfully."
+            "message": "Accident data saved successfully.",
+            'image_url': image_url
         }), 201
     else:
         return jsonify({
@@ -53,7 +83,8 @@ def get_all_accidents():
                 "longitude": data['longitude'],
                 "severityInPercentage": data['severityInPercentage'],
                 "severity": data['severity'],
-                "date": data['date']
+                "date": data['date'],
+                "image_url": data['image_url']
             } for data in allDatas
         ]
     })
@@ -75,7 +106,8 @@ def get_single_accident(accidentId):
                 "longitude": accident['longitude'],
                 "severityInPercentage": accident['severityInPercentage'],
                 "severity": accident['severity'],
-                "date": accident['date']
+                "date": accident['date'],
+                "image_url": accident['image_url']
             }
         })
     else:
