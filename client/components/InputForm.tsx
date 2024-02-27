@@ -22,17 +22,20 @@ const InputForm = () => {
       const formData = new FormData();
       formData.append("image", data.image[0]);
 
-      const response = await fetch("http://127.0.0.1:8080/api/upload-video", {
-        method: "POST",
-        // headers: {
-        //   "Content-Type": "application/form-data",
-        // },
-        body: formData,
-      });
+      const response = await fetch(
+        "http://127.0.0.1:8080/api/v1/public/upload-video",
+        {
+          method: "POST",
+          // headers: {
+          //   "Content-Type": "application/form-data",
+          // },
+          body: formData,
+        }
+      );
       const results = await response.json();
       if (results.status === "success") {
         const new_api = await fetch(
-          `http://127.0.0.1:8080/api/show-video/static/videos/${results.path}`,
+          `http://127.0.0.1:8080/api/v1/public/show-video/static/videos/${results.path}`,
           {
             method: "GET",
           }

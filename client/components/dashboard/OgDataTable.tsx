@@ -23,12 +23,12 @@ export default function OgDataTable({}: Props) {
   } = useQuery({
     queryKey: ["accidents"],
     queryFn: async () => {
-      const response = await fetch("http://127.0.0.1:8080/api/accident-datas");
+      const response = await fetch("http://127.0.0.1:8080/api/v1/accident/all");
       return await response.json();
     },
   });
 
-  console.log(error);
+  console.log(accidents);
   const columns = React.useMemo<ColumnDef<OgAccident, any>[]>(
     () => [
       {

@@ -5,19 +5,15 @@ from bson import ObjectId
 from flask_jwt_extended import create_access_token
 from pymongo import MongoClient
 
-auth_bp = Blueprint('auth', __name__, url_prefix='/auth')
+auth_bp = Blueprint('auth', __name__, url_prefix='/api/v1/auth')
 client = MongoClient("localhost", 27017)
 mongo_db = client.flask_database
 
-'''
-Collection for the accidents and users
-'''
+# COLLECTION FOR THE USERS AND ACCIDENT...
 accidents_collection = mongo_db.accidents
 users_collection = mongo_db.users
 
-'''
-Route for the user to login
-'''
+# Route for the user to login...
 @auth_bp.route('/login', methods=['POST', 'OPTIONS'])
 @cross_origin(supports_credentials=True)
 def login():
@@ -33,9 +29,7 @@ def login():
         return jsonify({'msg': "User doesnot exits"}), 404
     return jsonify({'msg': 'The username or password is incorrect'}), 401
 
-'''
-Route for the user to register
-'''
+# Route for the user to register...
 @auth_bp.route('/register', methods=['POST', 'OPTIONS'])
 @cross_origin(supports_credentials=True)
 def register():
