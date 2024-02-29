@@ -8,6 +8,7 @@ const CustomMap = dynamic(() => import("@/components/misc/CustomMap"), {
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
+import { format } from "date-fns";
 
 type Props = {};
 
@@ -38,22 +39,34 @@ export default function SingleAccidentPage({ params }: any) {
           {/* Other details section */}
           <GridContainer className="items-stretch">
             <div className="bg-white shadow-sm p-5 break-all">
-              {singleAccident?.data?.address}
+              <h3 className="font-bold text-xl pb-1 underline">Address</h3>
+              <p>{singleAccident?.data?.address}</p>
             </div>
             <div className="bg-white shadow-sm p-5 break-all">
+              <h3 className="font-bold text-xl pb-1 underline">Longitude</h3>
               {singleAccident?.data?.longitude}
             </div>
             <div className="bg-white shadow-sm p-5 break-all">
+              <h3 className="font-bold text-xl pb-1 underline">Latitude</h3>
               {singleAccident?.data?.latitude}
             </div>
             <div className="bg-white shadow-sm p-5 break-all">
+              <h3 className="font-bold text-xl pb-1 underline">Severity</h3>
               {singleAccident?.data?.severity}
             </div>
             <div className="bg-white shadow-sm p-5 break-all">
-              {singleAccident?.data?.severityInPercentage}
+              <h3 className="font-bold text-xl pb-1 underline">
+                Severity In Percentage
+              </h3>
+              {singleAccident?.data?.severityInPercentage} %
             </div>
             <div className="bg-white shadow-sm p-5 break-all">
+              <h3 className="font-bold text-xl pb-1 underline">Date</h3>
               {singleAccident?.data?.date}
+              {/* {format(
+                new Date(singleAccident?.data?.date).toLocaleString(),
+                "MMMM d, yyyy h:mm:ss a"
+              )} */}
             </div>
           </GridContainer>
           {/* Map Section */}

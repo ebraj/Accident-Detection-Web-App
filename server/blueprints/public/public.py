@@ -13,7 +13,7 @@ public_bp = Blueprint('public',__name__, url_prefix='/api/v1/public')
 # DETECT OBJECT ON IMAGE
 def detect_object_on_image(image_file):
     # model = YOLO('./models/yolov8n.pt')
-    model = YOLO('./models/current.pt')
+    model = YOLO('./models/i1-yolov8s.pt')
     results = model.predict(image_file)
     result = results[0]
     output = []

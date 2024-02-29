@@ -28,7 +28,15 @@ export default function OgDataTable({}: Props) {
     },
   });
 
-  console.log(accidents);
+  const sortedAccidents = React.useMemo(() => {
+    if (accidents && accidents.datas) {
+      return [...accidents.datas].sort(
+        (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+      );
+    }
+    return [];
+  }, [accidents]);
+
   const columns = React.useMemo<ColumnDef<OgAccident, any>[]>(
     () => [
       {
@@ -109,7 +117,7 @@ export default function OgDataTable({}: Props) {
   );
 
   const table = useReactTable({
-    data: accidents?.datas,
+    data: sortedAccidents || [],
     columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
