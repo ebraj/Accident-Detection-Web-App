@@ -97,4 +97,7 @@ The frontend setup is quite easy, unlike backend setup as it does not require an
 
 ## UIS
 
+![Login](./uis/login.png)
 ![Homepage](./uis/homepage.png)
+![AllDatas](./uis/datas.png)
+![Single Datas](./uis/single-data.png)
