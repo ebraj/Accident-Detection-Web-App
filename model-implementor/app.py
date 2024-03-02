@@ -6,7 +6,7 @@ import cvzone
 import math
 import time
 from modules.sort import *
-from services.apis import post_accident_data
+from services.apis import post_accident_data, send_mail_async_final
 from geopy.geocoders import Nominatim
 from modules.send_mail_async import send_mail_async
 import base64
@@ -85,6 +85,7 @@ async def main():
                         "severity": "Moderate",
                         "frame": frame_base64
                     }
+                    task = asyncio.create_task(send_mail_async_final(getLoc.latitude, getLoc.longitude, str(tempConf * 100), getLoc.address))
                     task1 = asyncio.create_task(post_accident_data(data))
                     # if response.status_code == 200:
                     #     print("Request successful. 🔥🔥🔥🔥🔥")
@@ -96,7 +97,6 @@ async def main():
                 cx, cy = x1 + w // 2, y1 + h // 2
                 cv2.circle(img, (cx, cy), 5, (255, 0, 255), cv2.FILLED)
                 totalAccidents.append(id)
-
 
         # if(float(tempConf) > 0.4):
         #     if (time.time() - lastEmailSentTime) > emailDebounceTime and isSendMail == False:
@@ -111,11 +111,10 @@ async def main():
 
         await asyncio.sleep(0.01)
 
-    # print('🔥🔥🔥🔥🔥', detections)
-    if task is not None:
-        await task
-    if task1 is not None:
-        await task1
+    if task & task1 is not None:
+        await task, task1
+    # if task is not None:
+    #     await task
 
 if __name__ == "__main__":
     loop = asyncio.get_event_loop()

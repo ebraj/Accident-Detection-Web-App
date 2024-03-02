@@ -46,7 +46,7 @@ export async function sendQuickMail({
   const mailResponse = await transport.sendMail({
     from: process.env.EMAIL,
     to: mailList as any,
-    subject: "🚨 Quick Mail",
+    subject: "🚨 Accident Alert",
     text: msgToSend,
   });
   return mailResponse;

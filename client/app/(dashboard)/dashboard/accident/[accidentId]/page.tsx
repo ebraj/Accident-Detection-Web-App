@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import { sendQuickMail } from "@/actions/quick-mail";
 import { useForm } from "react-hook-form";
 import { rescueTeamLists, RescueTeam } from "@/datas/rescueTeams";
+import toast from "react-hot-toast";
 
 type Props = {};
 
@@ -71,6 +72,12 @@ export default function SingleAccidentPage({ params }: any) {
       longitude,
       address,
     });
+
+    if (response) {
+      toast.success("Mail Sent Successfully");
+    } else {
+      toast.error("Mail Sent Failed");
+    }
   };
 
   return (

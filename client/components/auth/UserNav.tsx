@@ -30,7 +30,9 @@ export default function UserNav({}: Props) {
         <DropdownMenuItem>
           <Link href={"/"}>Homepage</Link>
         </DropdownMenuItem>
-        <DropdownMenuItem>Admins Lists</DropdownMenuItem>
+        <DropdownMenuItem>
+          <Link href={"/dashboard"}>Dashboard</Link>
+        </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem
           onClick={() => {
