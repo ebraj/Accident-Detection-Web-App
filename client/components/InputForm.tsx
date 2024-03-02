@@ -1,8 +1,7 @@
 "use client";
-import { useForm, SubmitHandler, set } from "react-hook-form";
-import Image from "next/image";
-import { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
+import { useEffect, useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
 const ReactPlayer = dynamic(() => import("react-player"), { ssr: false });
 
 type FormProps = {
