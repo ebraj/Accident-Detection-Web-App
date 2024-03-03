@@ -6,11 +6,22 @@ A system that will continuously monitor for the accident through the CCTV instal
 
 - Frontend
   - Next JS v.14
+  - Tailwind CSS
+  - TypeScript
+  - Axios
+  - React Query
+  - React Hook Form
+  - Leaflet
+  - Recharts
 - Backend
   - Flask
   - Python
+  - MongoDB
+  - Nodemailer
+  - Cloudinary
 - ML Model
   - YOLOv8
+  - Roboflow
 
 ## Setup Guide
 
@@ -51,7 +62,8 @@ A system that will continuously monitor for the accident through the CCTV instal
    pip3 install -r requirements.txt
    ```
 
-5. As everything is ready now, we can run the backend as
+5. Create the `.env` file referencing to the `.env.example` file.
+6. As everything is ready now, we can run the backend as
 
    ```
    # For windows
@@ -77,6 +89,12 @@ The frontend setup is quite easy, unlike backend setup as it does not require an
    npm run dev
    ```
 3. And you can view the page with the url `http://localhost:3000`
+4. `Note`: We are using the Nodemailer service in the frontend also, so we need to setup the `.env` file for the frontend too(Reference to `.env.example` file).
+
+## Final Setup(Model Implementor)
+
+1. Setup the virtual environment like in the backend setup(Step 1-4).
+2. And then run the application using `python app.py`
 
 ## Helpful References
 
@@ -99,5 +117,33 @@ The frontend setup is quite easy, unlike backend setup as it does not require an
 
 ![Login](./uis/login.png)
 ![Homepage](./uis/homepage.png)
-![AllDatas](./uis/datas.png)
-![Single Datas](./uis/single-data.png)
+![Dashboard](./uis/dashboard.png)
+![AllDatas](./uis/accident-datas.png)
+![Single Datas](./uis/single-accident.png)
+![Email](./uis/email.png)
+
+## Team Members
+
+<table>
+  <tr>
+    <td valign="top" align="center">
+        <div>
+          <img src="https://github.com/sam55-c.png" width="150px;"/><br /><sub><a href="https://github.com/sam55-c">Samundra <br> Poudel</a>
+        </div>
+    </td>
+    <td valign="top" align="center">
+        <div>
+          <img src="https://github.com/7xetri.png" width="150px;"/><br /><sub><a href="https://github.com/7xetri">Saugat Thapa</a>
+        </div>
+    </td>
+    <td valign="top" align="center">
+        <div>
+          <img src="https://github.com/SDPhoton.png" width="150px;"/><br /><sub><a href="https://github.com/SDPhoton">Sagar Dhakal</a>
+        </div>
+    </td>
+    <td valign="top" align="center">
+        <div>
+          <img src="https://github.com/ebraj.png" width="150px;"/><br /><sub><a href="https://github.com/ebraj">Ebraj Grg</a>
+        </div>
+    </td>
+</table>

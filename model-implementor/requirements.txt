@@ -11,6 +11,8 @@ filelock==3.13.1
 filterpy==1.4.5
 fonttools==4.45.1
 fsspec==2023.10.0
+geographiclib==2.0
+geopy==2.4.1
 h11==0.14.0
 httpcore==1.0.2
 httpx==0.26.0
