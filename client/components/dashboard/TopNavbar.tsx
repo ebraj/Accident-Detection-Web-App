@@ -3,6 +3,8 @@ import useSidebar from "@/contexts/useSidebar";
 import { BellRing, Menu } from "lucide-react";
 import UserNav from "../auth/UserNav";
 import MaxWidthContainer from "../layouts/MaxWidthContainer";
+import { Button } from "../ui/button";
+import { deleteCookie } from "cookies-next";
 
 type Props = {};
 
@@ -24,9 +26,17 @@ export default function TopNavbar({}: Props) {
           </div>
 
           <ul className="flex items-center justify-center space-x-6">
-            <li>
+            {/* <li>
               <BellRing />
-            </li>
+            </li> */}
+            <Button
+              onClick={() => {
+                deleteCookie("token");
+                window.location.pathname = "/auth/login";
+              }}
+            >
+              Logout
+            </Button>
             <UserNav />
           </ul>
         </nav>
