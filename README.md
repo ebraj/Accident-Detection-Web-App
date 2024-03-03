@@ -1,4 +1,4 @@
-# CNN-based Vehicle Collision Detection and Emergency Response System
+# CNN based Accident Detection and Emergency Response System
 
 A system that will continuously monitor for the accident through the CCTV installed and notify the concerned authorities for the instant rescue.
 
